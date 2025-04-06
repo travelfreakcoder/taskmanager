@@ -1,101 +1,498 @@
-import Image from "next/image";
 
-export default function Home() {
+
+
+// import { redirect } from "next/navigation";
+// import { createClient } from "../../utils/supabase/server";
+// import {
+//   Box,
+//   Card,
+//   CardContent,
+//   Typography,
+//   Drawer,
+//   List,
+//   ListItem,
+//   ListItemText,
+//   Button,
+// } from "@mui/material";
+// import TaskList from "./components/TaskList";
+// import Link from "next/link";
+
+// const drawerWidth = "30vw";
+
+// export default async function Home() {
+//   const supabase = await createClient();
+//   const { data, error } = await supabase.auth.getUser();
+
+//   if (error || !data?.user) {
+//     redirect("/login");
+//   }
+
+//   console.log("User ID:", data.user.id);
+
+//   const { data: tasks, error: tasksError } = await supabase
+//     .from("tasks")
+//     .select("*")
+//     .eq("user_id", data.user.id);
+
+//   if (tasksError) {
+//     console.error("Error fetching tasks:", tasksError.message);
+//     return <Box>Error loading tasks</Box>;
+//   }
+
+//   return (
+//     <Box
+//       sx={{
+//         display: "flex",
+//         height: "100vh",
+//         flexDirection: "column",
+//         backgroundColor: "#f4f6f8",
+//         p: 2,
+//       }}
+//     >
+//       <Box sx={{ display: "flex", flexGrow: 1, position: "relative" }}>
+//         <Drawer
+//           variant="persistent"
+//           open
+//           sx={{
+//             width: drawerWidth,
+//             flexShrink: 0,
+//             [`& .MuiDrawer-paper`]: {
+//               width: drawerWidth,
+//               boxSizing: "border-box",
+//               backgroundColor: "#1E1E1E",
+//               color: "white",
+//               position: "relative",
+//             },
+//           }}
+//         >
+//           <List>
+//             {["Create Task", "Dashboard", "Patients", "Appointments", "Reports", "Settings", "Logout"].map(
+//               (text) => (
+//                 <ListItem key={text} style={{ cursor: "pointer" }}>
+//                   <Link
+//                     href={text === "Create Task" ? "/create" : "#"}
+//                     passHref
+//                     style={{
+//                       textDecoration: "none",
+//                       color: "inherit",
+//                       width: "100%",
+//                     }}
+//                   >
+//                     <ListItemText primary={text} sx={{ textAlign: "center" }} />
+//                   </Link>
+//                 </ListItem>
+//               )
+//             )}
+//           </List>
+//         </Drawer>
+//         <Box sx={{ flexGrow: 1, p: 3, overflow: "auto" }}>
+//           <Card
+//             sx={{
+//               backgroundColor: "#6200ea",
+//               color: "white",
+//               mb: 3,
+//               borderRadius: 2,
+//               p: 2,
+//             }}
+//           >
+//             <CardContent>
+//               <Typography variant="h5" fontWeight="bold">
+//                 Welcome, {data?.user?.email}
+//               </Typography>
+//               <Typography variant="body1" sx={{ mt: 1 }}>
+//                 Manage your tasks efficiently and stay organized!
+//               </Typography>
+//             </CardContent>
+//           </Card>
+
+//           {/* Pass tasks to TaskList */}
+//           <TaskList tasks={tasks} />
+//         </Box>
+//       </Box>
+//     </Box>
+//   );
+// }
+
+
+
+// import { redirect } from "next/navigation";
+// import { createClient } from "../../utils/supabase/server";
+// import {
+//   Box,
+//   Card,
+//   CardContent,
+//   Typography,
+//   Drawer,
+//   List,
+//   ListItem,
+//   ListItemText,
+//   Button,
+// } from "@mui/material";
+// import TaskList from "./components/TaskList";
+// import Link from "next/link";
+// import { logout } from "./logout/actions"
+
+// const drawerWidth = "30vw";
+
+// export default async function Home() {
+//   const supabase = await createClient();
+//   const { data, error } = await supabase.auth.getUser();
+
+//   if (error || !data?.user) {
+//     redirect("/login");
+//   }
+
+//   console.log("User ID:", data.user.id);
+
+//   const { data: tasks, error: tasksError } = await supabase
+//     .from("tasks")
+//     .select("*")
+//     .eq("user_id", data.user.id);
+
+//   if (tasksError) {
+//     console.error("Error fetching tasks:", tasksError.message);
+//     return <Box>Error loading tasks</Box>;
+//   }
+
+//   return (
+//     <Box
+//       sx={{
+//         display: "flex",
+//         height: "100vh",
+//         flexDirection: "column",
+//         backgroundColor: "#f4f6f8",
+//         p: 2,
+//       }}
+//     >
+//       <Box sx={{ display: "flex", flexGrow: 1, position: "relative" }}>
+//         <Drawer
+//           variant="persistent"
+//           open
+//           sx={{
+//             width: drawerWidth,
+//             flexShrink: 0,
+//             [`& .MuiDrawer-paper`]: {
+//               width: drawerWidth,
+//               boxSizing: "border-box",
+//               backgroundColor: "#1E1E1E",
+//               color: "white",
+//               position: "relative",
+//               display: "flex",
+//               flexDirection: "column",
+//               justifyContent: "space-between",
+//               p: 2,
+//             },
+//           }}
+//         >
+//           <List>
+//             {["Create Task", "Dashboard", "Patients", "Appointments", "Reports", "Settings"].map(
+//               (text) => (
+//                 <ListItem key={text} style={{ cursor: "pointer" }}>
+//                   <Link
+//                     href={text === "Create Task" ? "/create" : "#"}
+//                     passHref
+//                     style={{
+//                       textDecoration: "none",
+//                       color: "inherit",
+//                       width: "100%",
+//                     }}
+//                   >
+//                     <ListItemText primary={text} sx={{ textAlign: "center" }} />
+//                   </Link>
+//                 </ListItem>
+//               )
+//             )}
+//           </List>
+
+//           {/* Logout Button at Bottom */}
+//           <Box sx={{ textAlign: "center", mt: "auto" }}>
+//             <form action={logout}>
+//               <Button type="submit" variant="contained" color="secondary" fullWidth>
+//                 Logout
+//               </Button>
+//             </form>
+//           </Box>
+//         </Drawer>
+//         <Box sx={{ flexGrow: 1, p: 3, overflow: "auto" }}>
+//           <Card
+//             sx={{
+//               backgroundColor: "#6200ea",
+//               color: "white",
+//               mb: 3,
+//               borderRadius: 2,
+//               p: 2,
+//             }}
+//           >
+//             <CardContent>
+//               <Typography variant="h5" fontWeight="bold">
+//                 Welcome, {data?.user?.email}
+//               </Typography>
+//               <Typography variant="body1" sx={{ mt: 1 }}>
+//                 Manage your tasks efficiently and stay organized!
+//               </Typography>
+//             </CardContent>
+//           </Card>
+
+//           {/* Pass tasks to TaskList */}
+//           <TaskList tasks={tasks} />
+//         </Box>
+//       </Box>
+//     </Box>
+//   );
+// }
+
+
+// import { redirect } from "next/navigation";
+// import { createClient } from "../../utils/supabase/server";
+// import {
+//   Box,
+//   Card,
+//   CardContent,
+//   Typography,
+//   Drawer,
+//   List,
+//   ListItem,
+//   ListItemText,
+//   Button,
+// } from "@mui/material";
+// import TaskList from "./components/TaskList";
+// import Link from "next/link";
+// import { logout } from "./logout/actions";
+
+// const drawerWidth = "30vw";
+
+// export default async function Home() {
+//   const supabase = await createClient();
+
+//   // Get active session instead of just the user
+//   const { data: sessionData } = await supabase.auth.getSession();
+
+//   // Redirect if user is not authenticated
+//   if (!sessionData?.session) {
+//     redirect("/login");
+//   }
+  
+
+//   console.log("User ID:", sessionData.session.user.id);
+
+//   // Fetch tasks for the logged-in user
+//   const { data: tasks, error: tasksError } = await supabase
+//     .from("tasks")
+//     .select("*")
+//     .eq("user_id", sessionData.session.user.id);
+
+//   if (tasksError) {
+//     console.error("Error fetching tasks:", tasksError.message);
+//     return <Box>Error loading tasks</Box>;
+
+
+//   }
+
+//   if(!tasks && !sessionData?.session?.user?.id ){
+//     redirect("/login")
+//   }
+
+//   return (
+//     <Box
+//       sx={{
+//         display: "flex",
+//         height: "100vh",
+//         flexDirection: "column",
+//         backgroundColor: "#f4f6f8",
+//         p: 2,
+//       }}
+//     >
+//       <Box sx={{ display: "flex", flexGrow: 1, position: "relative" }}>
+//         <Drawer
+//           variant="persistent"
+//           open
+//           sx={{
+//             width: drawerWidth,
+//             flexShrink: 0,
+//             [`& .MuiDrawer-paper`]: {
+//               width: drawerWidth,
+//               boxSizing: "border-box",
+//               backgroundColor: "#1E1E1E",
+//               color: "white",
+//               position: "relative",
+//               display: "flex",
+//               flexDirection: "column",
+//               justifyContent: "space-between",
+//               p: 2,
+//             },
+//           }}
+//         >
+//           <List>
+//             {["Create Task", "Dashboard", "Patients", "Appointments", "Reports", "Settings"].map(
+//               (text) => (
+//                 <ListItem key={text} style={{ cursor: "pointer" }}>
+//                   <Link
+//                     href={text === "Create Task" ? "/create" : "#"}
+//                     passHref
+//                     style={{
+//                       textDecoration: "none",
+//                       color: "inherit",
+//                       width: "100%",
+//                     }}
+//                   >
+//                     <ListItemText primary={text} sx={{ textAlign: "center" }} />
+//                   </Link>
+//                 </ListItem>
+//               )
+//             )}
+//           </List>
+
+//           {/* Logout Button at Bottom */}
+//           <Box sx={{ textAlign: "center", mt: "auto" }}>
+//             <form action={logout}>
+//               <Button type="submit" variant="contained" color="secondary" fullWidth>
+//                 Logout
+//               </Button>
+//             </form>
+//           </Box>
+//         </Drawer>
+//         <Box sx={{ flexGrow: 1, p: 3, overflow: "auto" }}>
+//           <Card
+//             sx={{
+//               backgroundColor: "#6200ea",
+//               color: "white",
+//               mb: 3,
+//               borderRadius: 2,
+//               p: 2,
+//             }}
+//           >
+//             <CardContent>
+//               <Typography variant="h5" fontWeight="bold">
+//                 Welcome, {sessionData?.session?.user?.email}
+//               </Typography>
+//               <Typography variant="body1" sx={{ mt: 1 }}>
+//                 Manage your tasks efficiently and stay organized!
+//               </Typography>
+//             </CardContent>
+//           </Card>
+
+//           {/* Pass tasks to TaskList */}
+//           <TaskList tasks={tasks} />
+//         </Box>
+//       </Box>
+//     </Box>
+//   );
+// }
+
+
+// "use client";
+
+// import { useState } from "react";
+
+// import { TextField, Button, Container, Typography, CircularProgress, Box, Alert } from "@mui/material";
+// import Link from "next/link";
+// import { useRouter } from "next/navigation";
+// import { login } from "./login/actions";
+
+// export default function LoginPage() {
+//   const [error, setError] = useState<string | null>(null);
+//   const [loading, setLoading] = useState<boolean>(false);
+//   const router = useRouter();
+
+//   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+//     event.preventDefault();
+//     setLoading(true);
+//     setError(null);
+
+//     const formData = new FormData(event.currentTarget);
+//     const response = await login(formData);
+
+//     if (response?.success === false) {
+//       setError(response.message);
+//       setLoading(false);
+//     }
+//   }
+
+//   return (
+//     <Container maxWidth="xs" sx={{ mt: 5, textAlign: "center" }}>
+//       <Typography variant="h5" gutterBottom>
+//         Log In
+//       </Typography>
+
+//       {error && <Alert severity="error">{error}</Alert>}
+
+//       <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+//         <TextField label="Email" name="email" type="email" required fullWidth />
+//         <TextField label="Password" name="password" type="password" required fullWidth />
+
+//         <Button type="submit" variant="contained" color="primary" fullWidth disabled={loading}>
+//           {loading ? <CircularProgress size={24} /> : "Log in"}
+//         </Button>
+//         <Typography variant="body2" sx={{ mt: 2 }}>
+//         Don't have an account? <Link href="/signup">Sign up here</Link>
+//       </Typography>
+//         {/* <Button href="/signup" type="submit" variant="contained" color="primary" fullWidth disabled={loading}>
+//           Signup
+//         </Button> */}
+//       </Box>
+      
+     
+//     </Container>
+//   );
+// }
+
+"use client";
+
+import { useState } from "react";
+import { TextField, Button, Container, Typography, CircularProgress, Box, Alert } from "@mui/material";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { login } from "./login/actions";
+
+export default function LoginPage() {
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    const formData = new FormData(event.currentTarget);
+    const response = await login(formData);
+
+    if (response?.success === false) {
+      setError(response.message);
+      setLoading(false);
+    }
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <Container
+      maxWidth="xs"
+      sx={{
+        mt: "64px", // 👈 Moves content below the fixed header
+        minHeight: "calc(100vh - 64px)", // 👈 Ensures it's properly centered
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        textAlign: "center",
+      }}
+    >
+      <Typography variant="h5" gutterBottom>
+        Log In
+      </Typography>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      {error && <Alert severity="error">{error}</Alert>}
+
+      <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <TextField label="Email" name="email" type="email" required fullWidth />
+        <TextField label="Password" name="password" type="password" required fullWidth />
+
+        <Button type="submit" variant="contained" color="primary" fullWidth disabled={loading}>
+          {loading ? <CircularProgress size={24} /> : "Log in"}
+        </Button>
+        
+        <Typography variant="body2" sx={{ mt: 2 }}>
+          Don't have an account? <Link href="/signup">Sign up here</Link>
+        </Typography>
+      </Box>
+    </Container>
   );
 }
