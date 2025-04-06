@@ -90,10 +90,60 @@
 // }
 
 
+// "use client"; // This must remain for useRouter()
+
+// import { Geist, Geist_Mono } from "next/font/google";
+// import { useEffect } from "react";
+// import { useRouter, useSearchParams } from "next/navigation";
+// import "./globals.css";
+// import Header from "./components/Header";
+// import Theme from "../../Theme/Theme";
+// import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
+
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
+
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
+
+// export default function RootLayout({
+//   children,
+// }: Readonly<{
+//   children: React.ReactNode;
+// }>) {
+//   const router = useRouter();
+//   const searchParams = useSearchParams();
+
+//   useEffect(() => {
+//     const type = searchParams.get("type");
+
+//     // If email confirmation detected, redirect to /login
+//     if (type === "signup") {
+//       router.replace("/login");
+//     }
+//   }, [router, searchParams]);
+
+//   return (
+//     <html lang="en">
+//       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+//         <Theme>
+//         <Header />
+//         {children}
+//         </Theme>
+//       </body>
+//     </html>
+//   );
+// }
+
+
 "use client"; // This must remain for useRouter()
 
 import { Geist, Geist_Mono } from "next/font/google";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import "./globals.css";
 import Header from "./components/Header";
@@ -110,7 +160,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export default function RootLayout({
+function LayoutWithRedirect({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -121,18 +171,31 @@ export default function RootLayout({
   useEffect(() => {
     const type = searchParams.get("type");
 
-    // If email confirmation detected, redirect to /login
     if (type === "signup") {
       router.replace("/login");
     }
   }, [router, searchParams]);
 
   return (
+    <>
+      <Header />
+      {children}
+    </>
+  );
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Theme>
-        <Header />
-        {children}
+          <Suspense fallback={null}>
+            <LayoutWithRedirect>{children}</LayoutWithRedirect>
+          </Suspense>
         </Theme>
       </body>
     </html>
